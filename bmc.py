@@ -133,7 +133,6 @@ def transferFrom(s, state, msg_sender, src, dst, wad):
 
 def initial_state():
     s = Solver()
-    # s.set(proof=True)
 
     myUser = Const('myUser', AddressSort)
     initialDeposit = Const('initialDeposit', UintSort)
@@ -142,9 +141,7 @@ def initial_state():
     eth_balances = Array('eth_balances', AddressSort, UintSort)
 
     # This is a manually defined constraint.
-    # I don't see how it's possible to constrain that totalSupply = sum of balanceOf[...]
-    # but we can overapproximate it by saying that no single balanceOf entry is larger than the totalSupply.
-    # We proved that in horn.py, but in a very ad-hoc way.
+    # We proved that in horn.py, but this lemma needs to be manually imported.
     a = Const('a', AddressSort)
     require(s, ForAll([a], ULE(balanceOf[a], eth_balances[WETH_Address])))
     require(s, ForAll([a], ULE(eth_balances[a], MAX_ETH)))
@@ -169,10 +166,6 @@ def is_ok(s, state, myUser, initialDeposit, starting_balance):
     p = And(s2.assertions()) # copy all of those assertions over into our predicate
     p = And(p, eth_balances[myUser] == starting_balance) # final balance check. technically optional, second clause always true if p is true
     return p
-
-    # eth_balances, weth_state = state
-    # balanceOf, allowance = weth_state
-    # return And(UGE(eth_balances[WETH_Address], initialDeposit), UGE(balanceOf[myUser], initialDeposit))
 
 # any external call to deposit
 def symbolic_deposit(s, state, myUser):
