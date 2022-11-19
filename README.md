@@ -8,7 +8,7 @@ Wrapped ETH, or WETH, is one of Ethereum’s most popular smart contracts. While
 
 We prove two critical invariants: (1) correctness of accounting, and (2) solvency. For accounting, we prove that the total supply of WETH is always equal to its balance of native Ether. For solvency, we prove that, regardless of other users’ actions, a user is always able to unstake Wrapped ETH. In the process, we also identified a minor, harmless bug in the contract. Our work enables the community to continue using WETH with increased confidence in its correctness.
 
-**Read the full blog post [here](https://www.zellic.io/blog/formal-verification-weth).**
+**[Read the full blog post here.](https://www.zellic.io/blog/formal-verification-weth)**
 
 ## Contents of this repository
 
